@@ -15,19 +15,19 @@ Steps:
 
 ## Possible improvements and changes
 1. plink can use the flag “--threads” for parallelization.  
-* Nextflow?  
+2. Nextflow?  
  * Probably not
 
-* Detection of existing files/output to avoid wasting time on rerunning steps that don’t need to be rerun.  
-* If there are reference files in data/ref/1kg then proceed with step1.sh, else stop.  
+3. Detection of existing files/output to avoid wasting time on rerunning steps that don’t need to be rerun.  
+4. If there are reference files in data/ref/1kg then proceed with step1.sh, else stop.  
  * Done  
 
-* If there are three output files per sample in data/geno/fastqc and one tsv per sample in data/sumstat/fastqc then run step3.sh, else stop.  
+5. If there are three output files per sample in data/geno/fastqc and one tsv per sample in data/sumstat/fastqc then run step3.sh, else stop.  
  * Done
 
-* Cluster support for parallel execution of multiple input files.  
+6. Cluster support for parallel execution of multiple input files.  
 
-* Include launcher scripts in the container (maybe as singularity apps? As in `singularity run --app submit-jobs --nodes 10 --time 160h`, or even `singularity run --app run-on-mosler --nodes 10 --time 160h` or similar).  
+7. Include launcher scripts in the container (maybe as singularity apps? As in `singularity run --app submit-jobs --nodes 10 --time 160h`, or even `singularity run --app run-on-mosler --nodes 10 --time 160h` or similar).  
 
 ## Known issues
 1. When the docker image is built there’s an error message saying “Failed building wheel for bitarray” but then it continues and says “Successfully installed bitarray-0.8.1 etc...” and it seems to run as it should. This should probably be fixed whether it affects the functionality or not.
