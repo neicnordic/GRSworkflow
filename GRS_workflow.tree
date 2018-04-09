@@ -1,0 +1,40 @@
+GRS_workflow
+├── Dockerfile
+├── GRS_workflow.tree
+├── Snakefile
+├── code
+│   ├── standardiseGRS.sh
+│   ├── step1_preparesumstats.sh
+│   ├── step2_preparingtarget_Ricopili.sh
+│   └── step3_calculateGRS.sh
+├── config.yml
+├── data
+│   ├── geno
+│   │   ├── postqc
+│   │   └── raw
+│   ├── ref
+│   │   └── 1kg_p1v3_PLINK_cleaned
+│   │       ├── 1kgEUR.noATCG.nomhc.bed
+│   │       ├── 1kgEUR.noATCG.nomhc.bim
+│   │       ├── 1kgEUR.noATCG.nomhc.fam
+│   │       └── README1kg
+│   └── sumstats
+│       ├── postqc
+│       └── raw
+│           ├── PGC_MDD2018_10kSNPs.gz
+│           └── ckqny.scz2snpres.gz
+├── doc
+├── environment.yml
+├── intermediate
+├── logs
+├── notebooks
+├── readme_overallrun
+├── results
+│   ├── GRS
+│   ├── figures
+│   ├── reports
+│   ├── sumstats_ldsc
+│   └── tables
+└── scratch
+
+21 directories, 16 files

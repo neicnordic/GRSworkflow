@@ -1,0 +1,6 @@
+data/
+testdata/
+singularity/GRSworkflow.simg
+results/
+logs/
+intermediate/
