@@ -227,6 +227,6 @@ bash ${DIR_PROJ}/code/standardiseGRS.sh ${GRS_NAME}.S1-8.profile ${GRS_NAME}.S1-
 cp ${GRS_NAME}.S1-8.standarized.profile ${DIR_PROJ}/results/GRS/${STUDY}_${GRS_NAME}.S1-8.standarized.profile
 
 # zipping intermediate files
-gzip *
+gzip -f *
 
 echo -e "\nCompleted at `date`"
