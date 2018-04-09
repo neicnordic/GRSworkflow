@@ -25,6 +25,10 @@ INFO_cf=0.6  # imputation quality cutoff
 if [ ! -z data/ref/1kg_p1v3_PLINK_cleaned/*.bim ];
 	then
 		# If a file named *.tsv exists in the data/sumstats/postqc folder, don't run this step
+		# Problem: this step will be skipped if any .tsv file exits, but still want to run this step to process new data
+		# Question: can this file check be more specific?
+		# e.g. "if [ -f data/sumstats/postqc/${name[i]}.tsv ]"
+		# in this case, for statement should be moved above
 		if [ -z `find data/sumstats/postqc/ -type f -name "*.tsv" -printf 1 -quit` ];
 			then
 				echo "Running step1_preparesumstats.sh"
@@ -44,6 +48,8 @@ if [ ! -z data/ref/1kg_p1v3_PLINK_cleaned/*.bim ];
 
 
 		# If a file named *.fam exists in the data/geno/postqc/s*/ folder, don't run this step
+		# Question: similarly, would something like the followings do (after the for-statement)?
+		# e.g. "if [ -f data/geno/postqc/${study[j]}/does.fam ] && [ -f data/geno/postqc/${study[j]}/dosefile.list ] && [ -f data/geno/postqc/${study[j]}/dosefile.list ]"
 		if [ -z `find data/geno/postqc/s*/ -type f -name "*.fam" -printf 1 -quit` ];
 			then
 				echo "Running step2_preparingtarget_Ricopili.sh"
