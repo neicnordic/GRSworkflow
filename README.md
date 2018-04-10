@@ -7,8 +7,7 @@ Steps:
 3. Download the "Testdata.tar.gz" archive from https://app.box.com/file/286447778176  
 4. Untar the Testdata.tar.gz with `tar -zxvf Testdata.tar.gz` and put the `data` and `tesdata` directories in the `GRSworkflow` directory  
 5. Run `sh scripts/dl-references.sh`  
-6. create a few empty folders `mkdir {logs,intermediate,results,results/sumstats_ldsc,results/GRS}`
-7. Run `sh scripts/start-bash-pipeline.sh` to test the pipeline  
+6. Run `sh scripts/start-bash-pipeline.sh` to test the pipeline  
 
 ## Challenges
 1. In step2_preparingtarget_Ricopili.sh there’s an if-else statement that checks whether the info/bgs/qc1 folders exist in that order, and if info exists, then bgs or qc1 aren’t used for anything. But if info doesn’t exist, but bgs does, qc1 isn’t used, and vice versa for qc1. If none of them exists then step3.sh will fail. I don’t know if checking this is easily doable in nextflow, hence it might make sense to just use the bash pipeline since it works already.  
