@@ -26,3 +26,5 @@ nose==1.3.7
 
 RUN git clone https://github.com/bulik/ldsc && \
 git clone https://github.com/precimed/python_convert
+
+RUN mkdir /tsd /net /work /projects /cluster

@@ -1,3 +1,6 @@
 data/
 testdata/
 singularity/GRSworkflow.simg
+intermediate/*
+logs/*
+results/*
