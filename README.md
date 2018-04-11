@@ -3,11 +3,11 @@
 ## Instructions for setting up and testing the workflow  
 Steps:  
 1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow`  
-2. Run `sh singularity/BuildSingularity.sh` to build the singularity image  
+2. Run `./singularity/BuildSingularity.sh` to build the singularity image
 3. Download the "Testdata.tar.gz" archive from https://ki.box.com/s/ct9pibmwu38z0jgfqvtyqr4et07niyad  
 4. Untar the Testdata.tar.gz with `tar -zxvf Testdata.tar.gz` and put the `data` and `tesdata` directories in the `GRSworkflow` directory  
-5. Run `sh scripts/dl-references.sh`  
-6. Run `sh scripts/start-bash-pipeline.sh` to test the pipeline  
+5. Run `./scripts/dl-references.sh`
+6. Run `./scripts/start-bash-pipeline.sh` to test the pipeline
 
 ## Challenges
 1. In step2_preparingtarget_Ricopili.sh there’s an if-else statement that checks whether the info/bgs/qc1 folders exist in that order, and if info exists, then bgs or qc1 aren’t used for anything. But if info doesn’t exist, but bgs does, qc1 isn’t used, and vice versa for qc1. If none of them exists then step3.sh will fail. I don’t know if checking this is easily doable in nextflow, hence it might make sense to just use the bash pipeline since it works already.  
