@@ -4,7 +4,7 @@
 Steps:  
 1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow`  
 2. Run `sh singularity/BuildSingularity.sh` to build the singularity image  
-3. Download the "Testdata.tar.gz" archive from https://app.box.com/file/286447778176  
+3. Download the "Testdata.tar.gz" archive from https://ki.box.com/s/ct9pibmwu38z0jgfqvtyqr4et07niyad  
 4. Untar the Testdata.tar.gz with `tar -zxvf Testdata.tar.gz` and put the `data` and `tesdata` directories in the `GRSworkflow` directory  
 5. Run `sh scripts/dl-references.sh`  
 6. Run `sh scripts/start-bash-pipeline.sh` to test the pipeline  
