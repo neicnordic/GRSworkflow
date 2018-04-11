@@ -1,3 +1,5 @@
+#!/bin/sh
+
 if [ ! -d "data/ref/ldsc" ];
 	then
 		mkdir data/ref/ldsc
