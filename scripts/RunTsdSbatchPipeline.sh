@@ -13,4 +13,4 @@ module purge
 module load singularity/2.4.4
 
 cd /cluster/projects/your-project-folder/GRSworkflow && \
-./scripts/RunTsdSbatchPipeline.sh
+./scripts/start-bash-pipeline.sh
