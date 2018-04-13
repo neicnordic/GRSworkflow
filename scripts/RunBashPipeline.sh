@@ -68,11 +68,11 @@ if [ ! -z data/ref/1kg_p1v3_PLINK_cleaned/*.bim ];
 				echo "Running step3_calculateGRS.sh"
 				for j in 0 1; do
 					for i in 0 1; do
-						bash code/step3_calculateGRS.sh \
+						sbatch scripts/RunMoslerBatch_step3.sh \
 						${DIR_PROJ} \
 						${study[j]} \
 						${name[i]} \
-						> logs/step3_calculateGRS_${study[j]}_${name[i]}.log 2>&1
+						> logs/RunMoslerBatch_step3_${study[j]}_${name[i]}.jobid					
 					done
 				done
 else
