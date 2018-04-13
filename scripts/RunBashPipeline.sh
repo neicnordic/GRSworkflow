@@ -14,7 +14,7 @@ Ncase=(34241 135458)
 Ncont=(45604 344901)
 
 # Define variables for step2.sh
-study=(s1 s2)
+study="s1 s2" # to make it a list - easier to run if only one study
 MAF_cf=0.01  # allele frequency cutoff
 INFO_cf=0.6  # imputation quality cutoff 
 
@@ -53,26 +53,26 @@ if [ ! -z data/ref/1kg_p1v3_PLINK_cleaned/*.bim ];
 		if [ -z `find data/geno/postqc/s*/ -type f -name "*.fam" -printf 1 -quit` ];
 			then
 				echo "Running step2_preparingtarget_Ricopili.sh"
-				for j in 0 1; do
+				for j in ${study}; do
 					bash code/step2_preparingtarget_Ricopili.sh \
 					${DIR_PROJ} \
-					${study[j]} \
+					${j} \
 					${MAF_cf} \
 					${INFO_cf} \
-					> logs/step2_preparingtarget_Ricopili_${study[j]}.log
+					> logs/step2_preparingtarget_Ricopili_${j}.log
 				done
 		fi
 
 		###### STEP3: calculating the genetic risk score
 		# need to run the script for 2 sumstats x 2 studies
 				echo "Running step3_calculateGRS.sh"
-				for j in 0 1; do
+				for j in ${study}; do
 					for i in 0 1; do
-						bash code/step3_calculateGRS.sh \
+						sbatch scripts/RunMoslerBatch_step3.sh \
 						${DIR_PROJ} \
-						${study[j]} \
+						${j} \
 						${name[i]} \
-						> logs/step3_calculateGRS_${study[j]}_${name[i]}.log 2>&1
+						> logs/RunMoslerBatch_step3_${j}_${name[i]}.jobid					
 					done
 				done
 else
