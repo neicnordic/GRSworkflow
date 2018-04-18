@@ -12,10 +12,24 @@ wget \
 r-base \
 unzip
 
-RUN cd /usr/bin/ && \
-wget https://www.cog-genomics.org/static/bin/plink180221/plink_linux_x86_64.zip && \
-unzip plink_linux_x86_64.zip && \
-rm plink_linux_x86_64.zip
+# plink build dependencies
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  curl \
+  libatlas-base-dev \
+  liblapack-dev \
+  zlib1g-dev
+# plink 2.0 alpha 1 final
+# https://github.com/chrchang/plink-ng/releases/tag/b0cec5e
+RUN cd /tmp \
+  && git clone --branch b0cec5e https://github.com/chrchang/plink-ng \
+  && cd plink-ng/2.0/build_dynamic/ \
+  && sed -i "s/ZSTD_O2 = 1.*/ZSTD_O2 = 0/" Makefile \
+  && make -j 5 \
+  && cp plink2 /usr/bin/ \
+  && cd ../../1.9 \
+  && bash plink_first_compile \
+  && cp plink /usr/bin
 
 RUN pip install \
 numpy==1.12.1 \
