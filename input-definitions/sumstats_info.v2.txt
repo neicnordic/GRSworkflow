@@ -1,0 +1,4 @@
+File name	CONSORTIA_TRAIT_YEAR_POP (gwas identifier)	Number of cases (affected)	Number of controls(unaffected)	Total sample size	disease or trait	Consortia	Phenotype	Phenotype abbreviation	Year of the publication	Publication PMID	Etnicity	Download URL	Contact person	LDSC h2g
+ckqny.scz2snpres.gz	PGC_SCZ_2014_GLB	34241	45604	NA	disease 	PGC	Schizophrenia	SCZ	2014	25056061	Global	https://www.med.unc.edu/pgc/results-and-downloads/downloads	NA	
+PGC_MDD2018_10kSNPs.gz	PGC_MDD_2018_GLB	135458	344901	NA	disease	PGC	major depression	MDD	2018	doi:10.1038/s41588-018-0090-3	Global	https://www.med.unc.edu/pgc/results-and-downloads/downloads	NA	
+iq_metaanalysis_noCOGENT-STR-STSA-DTR.out.gz	CTG_IQ_2018_EUR	NA	NA	229213	trait	CTG	IQ	IQ	prepublication	https://doi.org/10.1101/184853	European	NA	Jeanne Savage (j.e.savage@vu.nl)	

@@ -24,7 +24,7 @@ cd ldsc && \
 git checkout cf1707e
 RUN git clone https://github.com/precimed/python_convert && \
 cd python_convert && \
-git checkout eb49d7d
+git checkout ff68833
 
 # plink v1.90b5.4 64-bit (10 Apr 2018) downloaded manually
 ADD singularity/plink_linux_x86_64.zip /

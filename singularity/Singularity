@@ -1,0 +1,29 @@
+Bootstrap:docker
+From: oskarv/uc1.1:latest
+
+%appfiles pipeline
+	RunBashPipeline.sh bin/RunBashPipeline.sh
+
+%appinstall pipeline
+	chmod u+x bin/RunBashPipeline.sh
+
+%apprun pipeline
+	RunBashPipeline.sh
+
+%appfiles clean
+	rm-outputs.sh bin/rm-outputs.sh
+
+%appinstall clean
+	chmod u+x bin/rm-outputs.sh
+
+%apprun clean
+	rm-outputs.sh
+
+%appfiles kek
+	whitch bin/whitch
+
+%appinstall kek
+	chmod u+x bin/whitch
+
+%apprun kek
+	whitch
