@@ -1,6 +1,6 @@
 #!/bin/bash/
 # written by Lu Yi (lu.yi@ki.se)
-# version4: 2018-04-04
+# version5: 2018-05-14
 
 # AIM: Perform clumping and generating PRS 
 
@@ -44,7 +44,7 @@ REF_PLINK=${DIR_PROJ}/data/ref/1kg_p1v3_PLINK_cleaned/1kgEUR.noATCG.nomhc  # PLI
 
 # cleaned discovery set GWAS results:
 SUMSTAT_DIR=${DIR_PROJ}/data/sumstats/postqc
-IN_SUMSTAT=${SUMSTAT_DIR}/${GRS_NAME}.tsv
+IN_SUMSTAT=${SUMSTAT_DIR}/${GRS_NAME}.qced.tsv
 
 # genetic data directory
 GENO_DIR=${DIR_PROJ}/data/geno/postqc/${STUDY}
@@ -79,21 +79,28 @@ echo -e "\nSTEP1. check overlap SNPs and strand/allele consistency in discovery 
 # make some empty files in case no such SNPs
 touch overlap.pass.snps overlap.PROB.snps overlap.PROB.snps.alleleissue overlap.PROB.snps.strandissue 
 
-awk -v n_overlap=0 -v n_fail=0 '
+awk -v n_overlap=0 -v n_fail=0 -v snp=SNP -v a1=A1 -v a2=A2 '
 NR==FNR {a[$1]=$2$3}
 NR!=FNR {
+# first index column names in the sumstats 
+if (FNR==1) {for (i=1; i<=NF; i++) {var[$i] = i} }
+else {
 # check overlap SNPs
-if ($NF in a) {
+if ($var[snp] in a) {
+	# $var[snp] refers to the column with name "SNP"
+	# $var[a1] & $var[a2] refers to the column with name "A1", "A2"
+	# however, a[$var[snp]] refers to the two alleles in IN_TARGETSNP file
 	n_overlap+=1
 	# check strand and allele consistency	
-	b1=$1$2; b2=$2$1
-		if (b1==a[$NF] || b2==a[$NF]) { print $NF > "overlap.pass.snps" }
+	b1=$var[a1]$var[a2]; b2=$var[a2]$var[a1]
+		if (b1==a[$var[snp]] || b2==a[$var[snp]]) { print $var[snp] > "overlap.pass.snps" }
 		else {
 		n_fail+=1
-		print $NF,b1,a[$NF] > "overlap.PROB.snps"
+		print $var[snp],b1,a[$var[snp]] > "overlap.PROB.snps"
 		}
 	}
 } 
+}
 END {print "Number of overlap SNPs in discovery and target set: " n_overlap "\n" "Among which, " n_fail " has either strand or allele inconsistency. Check the file: overlap.PROB.snps"}
 ' ${IN_TARGETSNP} ${IN_SUMSTAT}
 
@@ -139,18 +146,29 @@ ${PLINK} \
 
 rm tmpref.*
 
-
 # STEP3: Make score/pval file for clumped SNPs only & flip strand 
 echo -e "\nSTEP3: Make score/pval file for clumped SNPs only.\n"
+awk -v out1=${OUT_SCOREFILE} -v out2=${OUT_PVALFILE} -v snp=SNP -v a1=A1 -v beta=BETA -v p=PVAL ' 
 # The 3rd column in the output "${GRS_NAME}.clumped" are the clumped SNPs, extract these in the 2 results files
-awk -v out1=${OUT_SCOREFILE} -v out2=${OUT_PVALFILE} ' 
   NR==FNR {a[$3]++} 
-  NR!=FNR && ($NF in a) {
-  	# output score file should contain SNP, A1, effect, i.e. logOR
-  	if (FNR==1) {print $NF, $1, "effect" > out1} else {print $NF, $1, log($(NF-3)) > out1}
-  	# output pvalue file should contain SNP, Pval 	
-  	print $NF, $(NF-2) > out2
-  	}' ${GRS_NAME}.clumped ${IN_SUMSTAT}  
+  NR!=FNR {
+# first index column names in the sumstats 
+if (FNR==1) {for (i=1; i<=NF; i++) {var[$i] = i} }
+ 
+# check overlap SNPs
+if ($var[snp] in a) {
+
+	# $var[snp] refers to the column with name "SNP"
+	# $var[a1] refers to the column with name "A1"
+	# $var[beta] is the BETA column
+	# $var[p] is the PVAL column
+
+# output score file should contain SNP, A1, BETA (beta|logOR)
+print $var[snp], $var[a1], $var[beta] > out1
+# output pvalue file should contain SNP, Pval 	
+print $var[snp], $var[p] > out2
+}
+}' ${GRS_NAME}.clumped ${IN_SUMSTAT}  
 
 # Flip strand (with effect stay the same) for any clumped snps with strand issue 
 awk -v out=${OUT_SCOREFILE}.tmp -v n=0 '
@@ -167,8 +185,9 @@ NR!=FNR {OFS="\t";
 	}
 END {print "Flipped strand for " n " SNPs"}' overlap.PROB.snps.strandissue ${OUT_SCOREFILE}  
 
-mv ${OUT_SCOREFILE}.tmp ${OUT_SCOREFILE} 
-
+if test -f ${OUT_SCOREFILE}.tmp 
+then mv ${OUT_SCOREFILE}.tmp ${OUT_SCOREFILE} 
+fi
 
 wc -l ${OUT_SCOREFILE} ${OUT_PVALFILE}
 
@@ -227,6 +246,6 @@ bash ${DIR_PROJ}/code/standardiseGRS.sh ${GRS_NAME}.S1-8.profile ${GRS_NAME}.S1-
 cp ${GRS_NAME}.S1-8.standarized.profile ${DIR_PROJ}/results/GRS/${STUDY}_${GRS_NAME}.S1-8.standarized.profile
 
 # zipping intermediate files
-gzip -f *
+gzip *
 
 echo -e "\nCompleted at `date`"

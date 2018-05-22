@@ -12,11 +12,13 @@ sumstat=(ckqny.scz2snpres.gz PGC_MDD2018_10kSNPs.gz)
 name=(PGC_SCZ_2014_GLB PGC_MDD_2018_GLB)
 Ncase=(34241 135458)
 Ncont=(45604 344901)
+Ntot=("NA" "NA")
 
 # Define variables for step2.sh
 study=(s1 s2)
 MAF_cf=0.01  # allele frequency cutoff
 INFO_cf=0.6  # imputation quality cutoff 
+OR_cf=25  	 # OR cutoff
 
 # do not require additional variable for step3.sh
 
@@ -42,6 +44,10 @@ if [ ! -z data/ref/1kg_p1v3_PLINK_cleaned/*.bim ];
 					${name[i]} \
 					${Ncase[i]} \
 					${Ncont[i]} \
+					${Ntot[i]} \
+					${MAF_cf} \
+					${INFO_cf} \
+					${OR_cf} \
 					> logs/step1_preparesumstats_${name[i]}.log;
 				done
 		fi
