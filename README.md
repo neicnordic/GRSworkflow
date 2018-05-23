@@ -1,6 +1,6 @@
 # GRSworkflow for use case 1.1
 
-## Instructions for setting up and testing the workflow  
+## Instructions for setting up and testing the serial workflow  
 Steps:  
 1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow.git`  
 2. Run `./singularity/BuildSingularity.sh` to build the singularity image
@@ -9,9 +9,24 @@ Steps:
 5. Run `./scripts/dl-references.sh`
 6. Run `./scripts/start-bash-pipeline.sh` to test the pipeline
 
+## Step by step instructions to adapt the parallelized workflow to your local slurm setup  
+1. Change branches to the `optimized` branch  
+2. Copy the `scripts/RunTsdSbatchPipeline.sh` script to `scripts/RunNAMESbatchPipeline.sh` and change NAME to the name of your system.  
+3. Open the `scripts/RunNAMESbatchPipeline.sh` file with a text editor and begin by changing the directory path on row 10 to one that points to the absolute path of your `GRSworkflow/input-definitions` directory.  
+4. Now change the path on row 17 to point to the absolute path of your GRSworkflow directory.  
+5. That's it for the `scripts/RunNAMESbatchPipeline.sh` script, you can now save and close it.  
+6. Proceed by opening the `scripts/step1.sbatch` script with a text editor.  
+7. Begin by changing the account name in the --account flag to your own account name. Then edit or remove the `source` row as well as the two `module` rows as necessary.  
+8. On row 36 you need to edit the mount points so that they are correct for your specific system. The mount points (the -B and --home flags) from the original script only works for TSD, it's possible you don't need the --home flag at all for instance.  
+9. Repeat step 7 and 8 for `scripts/step2.sbatch` and `scripts/step3.sbatch`.  
+10. You are now ready to test the pipeline for the first time, navigate to the GRSworkflow folder if you're not already there, and run the `./scripts/RunNAMESbatchPipeline.sh` script that you created and edited earlier and use `squeue` and `qsumm` to monitor the execution of the individual jobs.  
+You should see an output similar to this when you run squeue:  
+![Image of squeue cli output](https://github.com/neicnordic/GRSworkflow/blob/optimized/.squeue.png)
+The image shows eight jobs being queued in slurm, four of them are marked with "Priority" and will run as soon as it's their turn in the queue. The ones marked with "Dependency" will run once the jobs that are marked with "Priority" that they depend on have finished.  
+This particular workflow has three steps, step 1 and step 2 run independently of each other, and can therefore run simultaneously. But step 3 depends on output files from step 1 and step 2. It is the step 1 and step 2 jobs that are marked with "Priority", and step 3 jobs are marked with "Dependency".  
+
 ## Challenges
-1. In step2_preparingtarget_Ricopili.sh there’s an if-else statement that checks whether the info/bgs/qc1 folders exist in that order, and if info exists, then bgs or qc1 aren’t used for anything. But if info doesn’t exist, but bgs does, qc1 isn’t used, and vice versa for qc1. If none of them exists then step3.sh will fail. I don’t know if checking this is easily doable in nextflow, hence it might make sense to just use the bash pipeline since it works already.  
-2. If we go forward with the bash pipeline we can solve parallel sample execution with the built in parallelization options in e.g slurm on TSD.  
+1. Adapt the workflow to Moab/Torque to achieve a similar level of parallelization.
 
 ## Possible improvements and changes
 1. plink can use the flag “--threads” for parallelization.  
@@ -26,6 +41,7 @@ Steps:
  * Done
 
 6. Cluster support for parallel execution of multiple input files.  
+ * Done
 
 7. Include launcher scripts in the container (maybe as singularity apps? As in `singularity run --app submit-jobs --nodes 10 --time 160h`, or even `singularity run --app run-on-mosler --nodes 10 --time 160h` or similar).  
 
