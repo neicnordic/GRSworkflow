@@ -16,7 +16,7 @@ Steps:
 4. Now change the path on row 17 to point to the absolute path of your GRSworkflow directory.  
 5. That's it for the `scripts/RunNAMESbatchPipeline.sh` script, you can now save and close it.  
 6. Proceed by opening the `scripts/step1.sbatch` script with a text editor.  
-7. Begin by changing the account name in the --account flag to your own account name. Then edit or remove the `source` row as well as the two `module` rows as necessary.  
+7. Begin by changing the account name in the --account flag to your own account name, also edit the `--mem-per-cpu` flag to something that suits your system. Then edit or remove the `source` row as well as the two `module` rows as necessary.  
 8. On row 36 you need to edit the mount points so that they are correct for your specific system. The mount points (the -B and --home flags) from the original script only works for TSD, it's possible you don't need the --home flag at all for instance.  
 9. Repeat step 7 and 8 for `scripts/step2.sbatch` and `scripts/step3.sbatch`.  
 10. You are now ready to test the pipeline for the first time, navigate to the GRSworkflow folder if you're not already there, and run the `./scripts/RunNAMESbatchPipeline.sh` script that you created and edited earlier and use `squeue` and `qsumm` to monitor the execution of the individual jobs.  
