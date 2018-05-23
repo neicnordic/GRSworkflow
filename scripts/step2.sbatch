@@ -20,7 +20,7 @@ SAMPLE_ROW=$2
 PROJ_DIR=$3
 
 # These lines extract rows and columns from the sumstats_info.v2.txt file and use them as input for step1.sh
-INPUT=$(cat ${INPUT_PATH}/step2inputs.csv | awk -v TI="$PHENO_ROW" 'NR==TI')
+INPUT=$(cat ${INPUT_PATH}/step2inputs.csv | awk -v TI="$SAMPLE_ROW" 'NR==TI')
 
 # Static variables for step2.sh
 MAF_cf=0.01
