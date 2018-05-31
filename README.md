@@ -1,5 +1,9 @@
 # GRSworkflow for use case 1.1
 
+Conceptual representation of the workflow that assumes two input files for step 1 and three input files for step 2. The third step is a nested loop that combines the output from the first file from step 1 with each output from step 2, and this is repeated for each output file from step 1 as shown in the image.
+![Image of workflow](https://raw.githubusercontent.com/neicnordic/GRSworkflow/optimized/.GRSworkflowDAG.png)
+
+
 ## Instructions for setting up and testing the serial workflow  
 Steps:  
 1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow.git`  
