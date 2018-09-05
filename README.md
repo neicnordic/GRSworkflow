@@ -6,10 +6,10 @@ Conceptual representation of the workflow that assumes two input files for step 
 
 ## Instructions for setting up and testing the serial workflow  
 Steps:  
-1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow.git`  
+1. Clone this repository `git clone https://github.com/neicnordic/GRSworkflow.git`  
 2. Run `./singularity/BuildSingularity.sh` to build the singularity image
 3. Download the "Testdata.tar.gz" archive from https://ki.box.com/s/ct9pibmwu38z0jgfqvtyqr4et07niyad  
-4. Untar the Testdata.tar.gz with `tar -zxvf Testdata.tar.gz` and put the `data` and `tesdata` directories in the `GRSworkflow` directory  
+4. Untar the Testdata.tar.gz with `tar -zxvf Testdata.tar.gz` and put the `data` and `testdata` directories in the `GRSworkflow` directory  
 5. Run `./scripts/dl-references.sh`
 6. Run `./scripts/start-bash-pipeline.sh` to test the pipeline
 
