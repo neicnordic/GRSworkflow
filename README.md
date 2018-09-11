@@ -2,6 +2,7 @@
 
 ## Instructions for setting up and testing the workflow  
 Steps:  
+0. If you want the latest and most up to date version with slurm parallelization, head over to https://github.com/neicnordic/GRSworkflow/tree/optimized and follow the instructions.
 1. Clone this repository `git clone https://github.com/oskarvid/GRSworkflow.git`  
 2. Run `./singularity/BuildSingularity.sh` to build the singularity image
 3. Download the "Testdata.tar.gz" archive from https://ki.box.com/s/ct9pibmwu38z0jgfqvtyqr4et07niyad  
