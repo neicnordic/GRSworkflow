@@ -1,5 +1,7 @@
 # GRSworkflow for use case 1.1
 
+This workflow is developed by Dr. Yi Lu (lu.yi@ki.se) and Oskar Vidarsson (oskar.vidarsson@uib.no). Please contact us with any questions.
+
 ## Instructions for setting up and testing the workflow  
 Steps:  
 0. If you want the latest and most up to date version with slurm parallelization, head over to https://github.com/neicnordic/GRSworkflow/tree/optimized and follow the instructions.
