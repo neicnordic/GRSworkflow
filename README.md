@@ -14,6 +14,14 @@ Steps:
 5. Run `./scripts/dl-references.sh`  
 6. Run `./scripts/start-bash-pipeline.sh` to test the pipeline  
 
+<details><summary>TSD specific tip</summary>
+<p>
+On TSD you can easily set the workflow up with the `copy-workflow.sh` script. It lets you copy the workflow from the shared disk to a directory of your choice, and it also automatically sets up test data so you can verify that the workflow runs before you use actual production data.
+
+Simply run `/tsd/shared/bioinformatics/workflows/GRSworkflow/scripts/copy-workflow.sh -d /path/to/where/you/want/to/place/the/workflow -t` to both copy the workflow directory as well as automatically put toy data and references in place. The `-t` flag is optional and does not require any arguments.
+</p>
+</details>
+
 ## Step by step instructions to adapt the parallelized workflow to your slurm setup  
 1. Follow step 1 to 5 above  
 2. Copy the `scripts/RunTsdSbatchPipeline.sh` script to `scripts/RunNAMESbatchPipeline.sh` and change NAME to the name of your platform.  
